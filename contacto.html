@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Escuela Las Canteras | Contacto</title>
+
+  <meta
+    name="description"
+    content="Datos de contacto de Escuela Las Canteras, ubicación y formulario de contacto."
+  />
+
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <link rel="icon" href="assets/icono/insignia.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <div class="topbar-left">
+        <span id="fecha-actual">domingo, 22 de marzo de 2026</span>
+        <span>|</span>
+        <a href="index.html" class="ultimas-link">Volver a portada</a>
+      </div>
+    </div>
+  </div>
+
+  <header class="branding">
+    <div class="container branding-inner">
+      <div class="brand-logo">
+        <img src="assets/logos/logo-escuela.png" alt="Logo Escuela Las Canteras" />
+      </div>
+
+      <div class="brand-text">
+        <h1>Escuela Las Canteras</h1>
+        <p>Por una educación sustentable y amor por el medio ambiente</p>
+      </div>
+    </div>
+  </header>
+
+  <nav class="main-nav" aria-label="Navegación principal">
+    <div class="container nav-inner">
+      <a class="home-link" href="index.html" aria-label="Inicio">⌂</a>
+
+      <ul class="nav-list">
+        <li class="nav-item dropdown">
+          <button
+            class="dropdown-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-label="Abrir submenú Escuela"
+          >
+            Escuela
+            <span class="dropdown-arrow">▾</span>
+          </button>
+
+          <div class="dropdown-menu">
+            <a href="escuela.html">Nuestra escuela</a>
+            <a href="assets/pdf/proyecto-educativo.pdf" target="_blank" rel="noopener noreferrer">
+              Proyecto Educativo
+            </a>
+            <a href="sello.html">Sello institucional</a>
+            <a href="assets/pdf/reglamento-interno.pdf" target="_blank" rel="noopener noreferrer">
+              Reglamento interno
+            </a>
+            <a href="assets/pdf/reglamento-convivencia.pdf" target="_blank" rel="noopener noreferrer">
+              Reglamento convivencia
+            </a>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="https://bibliotecadigital.mineduc.cl/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Biblioteca CRA
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="https://sites.google.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Intranet
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="https://hackcop.cl/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Hackcop
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="contacto.html">Contacto</a>
+        </li>
+      </ul>
+
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+      >
+        ☰
+      </button>
+    </div>
+  </nav>
+
+  <main id="contenido" class="container page-layout">
+    <header class="page-header">
+      <h1 class="page-title">Contacto</h1>
+      <p class="page-subtitle">
+        Información de contacto, ubicación del establecimiento y canal de comunicación.
+      </p>
+    </header>
+
+    <section class="contact-grid">
+      <article class="page-card">
+        <h2 class="contact-title">Datos de contacto</h2>
+
+        <div class="contact-list">
+          <p><strong>Establecimiento:</strong> Escuela Las Canteras</p>
+          <p><strong>Dirección:</strong> Secundino Pérez sin número, Población Las Canteras, comuna de Copiapó, Región de Atacama, Chile</p>
+          <p><strong>Correo:</strong> secretariaescuelalascanteras@gmail.com</p>
+          <p><strong>Teléfono:</strong> 522213454</p>
+        </div>
+
+        <div class="map-box">
+          <iframe
+            src="https://www.google.com/maps?q=Escuela+Las+Canteras+Copiap%C3%B3&output=embed"
+            width="100%"
+            height="360"
+            style="border:0"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Mapa de ubicación de Escuela Las Canteras"
+          ></iframe>
+        </div>
+      </article>
+
+      <article class="page-card">
+        <h2 class="contact-title">Formulario de contacto</h2>
+
+        <form
+          class="contact-form"
+          name="contacto"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          action="gracias.html"
+        >
+          <input type="hidden" name="form-name" value="contacto" />
+          <p class="hidden-field">
+            <label>
+              No completar este campo:
+              <input name="bot-field" />
+            </label>
+          </p>
+
+          <label for="nombre">Nombre</label>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            placeholder="Ingrese su nombre"
+            required
+          />
+
+          <label for="correo">Correo electrónico</label>
+          <input
+            type="email"
+            id="correo"
+            name="correo"
+            placeholder="Ingrese su correo"
+            required
+          />
+
+          <label for="asunto">Asunto</label>
+          <input
+            type="text"
+            id="asunto"
+            name="asunto"
+            placeholder="Asunto del mensaje"
+            required
+          />
+
+          <label for="mensaje">Mensaje</label>
+          <textarea
+            id="mensaje"
+            name="mensaje"
+            rows="6"
+            placeholder="Escriba su mensaje"
+            required
+          ></textarea>
+
+          <button type="submit" class="contact-btn">Enviar mensaje</button>
+        </form>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <h3>Escuela Las Canteras Copiapó</h3>
+        <p>Región de Atacama | Chile</p>
+      </div>
+
+      <div>
+        <h3>Contacto</h3>
+        <p>contacto@escuelalascanterascopiapo.cl</p>
+        <p>Teléfono: 522213454</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      © 2026 Escuela Las Canteras de Copiapó —
+      Desarrollado por
+      <a href="https://hackcop.cl" target="_blank" rel="noopener noreferrer">Hackcop</a>
+      · Desde el desierto más árido al mundo
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
