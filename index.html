@@ -28,6 +28,20 @@
 <body>
   <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
 
+  <!-- POPUP AUTOMÁTICO -->
+  <div id="popup-auto" class="popup-auto" aria-hidden="true">
+    <div class="popup-contenido">
+      <button class="popup-cerrar" id="popup-cerrar-btn" aria-label="Cerrar ventana">×</button>
+      <img src="assets/img/popup-anuncio.jpg" alt="Aviso destacado" class="popup-img" />
+      <div class="popup-texto">
+        <h3>Bienvenidos a Escuela Las Canteras</h3>
+        <p>
+          Revisa nuestras noticias, actividades escolares y novedades destacadas de la comunidad educativa.
+        </p>
+      </div>
+    </div>
+  </div>
+
   <div class="topbar">
     <div class="container topbar-inner">
       <div class="topbar-left">
@@ -163,8 +177,6 @@
           </a>
         </li>
 
-      
-
         <li class="nav-item">
           <a class="nav-link" href="contacto.html">Contacto</a>
         </li>
@@ -182,238 +194,277 @@
   </nav>
 
   <main id="contenido" class="container main-layout">
-    <section class="hero-grid">
-      <article class="hero-main">
-        <div class="slider" aria-label="Carrusel principal">
-          <a href="noticia-elecciones.html" class="slide active">
-            <img
-              src="assets/img/carrusel/slide6.webp"
-              alt="Elecciones del centro de estudiantes"
-            />
-            <div class="slide-overlay">
-              <div class="hero-tags">
-                <span>General</span>
-                <span>Mi Escuela</span>
-                <span>Noticias</span>
-                <span>Portada</span>
+    <div class="contenido-principal">
+      <section class="hero-grid">
+        <article class="hero-main">
+          <div class="slider" aria-label="Carrusel principal">
+            <a href="noticia-elecciones.html" class="slide active">
+              <img
+                src="assets/img/carrusel/slide6.webp"
+                alt="Elecciones del centro de estudiantes"
+              />
+              <div class="slide-overlay">
+                <div class="hero-tags">
+                  <span>General</span>
+                  <span>Mi Escuela</span>
+                  <span>Noticias</span>
+                  <span>Portada</span>
+                </div>
+                <h2>Elecciones del centro de estudiantes</h2>
+                <div class="hero-meta">marzo 18, 2026</div>
               </div>
-              <h2>Elecciones del centro de estudiantes</h2>
-              <div class="hero-meta">marzo 18, 2026</div>
+            </a>
+
+            <a
+              class="slide"
+              href="noticia-simce.html"
+              aria-label="Ir a la noticia: Resultados SIMCE"
+            >
+              <img
+                src="assets/img/carrusel/slide4.webp"
+                alt="Resultados SIMCE del establecimiento"
+              />
+              <div class="slide-overlay">
+                <div class="hero-tags">
+                  <span>Logros</span>
+                  <span>Académico</span>
+                </div>
+                <h2>La comunidad educativa celebra positivos resultados SIMCE</h2>
+                <div class="hero-meta">marzo 16, 2026 &nbsp;&nbsp; Redacción</div>
+              </div>
+            </a>
+
+            <a
+              class="slide"
+              href="noticia-dia-mujer.html"
+              aria-label="Ir a la noticia: Día de la Mujer"
+            >
+              <img
+                src="assets/img/carrusel/slide8.webp"
+                alt="Conmemoración del Día de la Mujer"
+              />
+              <div class="slide-overlay">
+                <div class="hero-tags">
+                  <span>Comunidad</span>
+                  <span>Conmemoración</span>
+                </div>
+                <h2>
+                  Las Canteras conmemora el Día de la Mujer con participación de la comunidad
+                </h2>
+                <div class="hero-meta">marzo 9, 2026 &nbsp;&nbsp; Redacción</div>
+              </div>
+            </a>
+
+            <a
+              class="slide"
+              href="noticia-estadio.html"
+              aria-label="Ir a la noticia: Visita al estadio Luis Hermosilla"
+            >
+              <img
+                src="assets/img/carrusel/slide3.webp"
+                alt="Salida pedagógica al estadio Luis Hermosilla"
+              />
+              <div class="slide-overlay">
+                <div class="hero-tags">
+                  <span>Salida pedagógica</span>
+                  <span>Primer ciclo</span>
+                </div>
+                <h2>Estudiantes del primer ciclo visitaron el estadio Luis Hermosilla</h2>
+                <div class="hero-meta">marzo 20, 2026 &nbsp;&nbsp; Redacción</div>
+              </div>
+            </a>
+          </div>
+
+          <button class="slider-arrow prev" type="button" aria-label="Slide anterior">❮</button>
+          <button class="slider-arrow next" type="button" aria-label="Slide siguiente">❯</button>
+
+          <div class="slider-dots" aria-label="Controles del carrusel"></div>
+        </article>
+
+        <aside class="general-grid" aria-label="Sección general">
+          <a
+            class="general-card"
+            href="noticia-elecciones.html"
+            aria-label="Leer noticia: Elecciones del centro de estudiantes"
+          >
+            <img
+              src="assets/img/galeria/centro-de-estudiante-2.webp"
+              alt="Centro de estudiantes"
+            />
+            <div class="general-overlay">
+              <h3>Elecciones del centro de estudiantes</h3>
+              <p>marzo 18, 2026</p>
             </div>
           </a>
 
           <a
-            class="slide"
+            class="general-card"
             href="noticia-simce.html"
-            aria-label="Ir a la noticia: Resultados SIMCE"
+            aria-label="Leer noticia: Resultados SIMCE"
           >
-            <img
-              src="assets/img/carrusel/slide4.webp"
-              alt="Resultados SIMCE del establecimiento"
-            />
-            <div class="slide-overlay">
-              <div class="hero-tags">
-                <span>Logros</span>
-                <span>Académico</span>
-              </div>
-              <h2>La comunidad educativa celebra positivos resultados SIMCE</h2>
-              <div class="hero-meta">marzo 16, 2026 &nbsp;&nbsp; Redacción</div>
+            <img src="assets/img/galeria/simce-2.webp" alt="Resultados SIMCE" />
+            <div class="general-overlay">
+              <h3>Las Canteras celebra resultados SIMCE</h3>
+              <p>marzo 16, 2026</p>
             </div>
           </a>
 
           <a
-            class="slide"
+            class="general-card"
             href="noticia-dia-mujer.html"
-            aria-label="Ir a la noticia: Día de la Mujer"
+            aria-label="Leer noticia: Día de la Mujer"
           >
             <img
-              src="assets/img/carrusel/slide8.webp"
-              alt="Conmemoración del Día de la Mujer"
+              src="assets/img/galeria/dia-de-la-mujer-1.webp"
+              alt="Día de la mujer en Las Canteras"
             />
-            <div class="slide-overlay">
-              <div class="hero-tags">
-                <span>Comunidad</span>
-                <span>Conmemoración</span>
-              </div>
-              <h2>
-                Las Canteras conmemora el Día de la Mujer con participación de la comunidad
-              </h2>
-              <div class="hero-meta">marzo 9, 2026 &nbsp;&nbsp; Redacción</div>
+            <div class="general-overlay">
+              <h3>Celebramos el Día de la Mujer en Las Canteras</h3>
+              <p>marzo 9, 2026</p>
             </div>
           </a>
 
           <a
-            class="slide"
+            class="general-card"
             href="noticia-estadio.html"
-            aria-label="Ir a la noticia: Visita al estadio Luis Hermosilla"
+            aria-label="Leer noticia: Visita al estadio Luis Hermosilla"
           >
             <img
-              src="assets/img/carrusel/slide3.webp"
-              alt="Salida pedagógica al estadio Luis Hermosilla"
+              src="assets/img/galeria/estudiantes-visitan-estadio-2.webp"
+              alt="Salida pedagógica"
             />
-            <div class="slide-overlay">
-              <div class="hero-tags">
-                <span>Salida pedagógica</span>
-                <span>Primer ciclo</span>
-              </div>
-              <h2>Estudiantes del primer ciclo visitaron el estadio Luis Hermosilla</h2>
-              <div class="hero-meta">marzo 20, 2026 &nbsp;&nbsp; Redacción</div>
+            <div class="general-overlay">
+              <h3>Alumnos del primer ciclo visitaron el estadio Luis Hermosilla</h3>
+              <p>marzo 20, 2026</p>
+            </div>
+          </a>
+        </aside>
+      </section>
+
+      <section class="news-section" aria-labelledby="noticias-recientes">
+        <div class="section-title">
+          <span></span>
+          <h2 id="noticias-recientes">Noticias recientes</h2>
+        </div>
+
+        <div class="news-grid">
+          <a
+            class="news-card"
+            href="noticia-elecciones.html"
+            aria-label="Leer noticia: Elecciones del centro de estudiantes"
+          >
+            <img
+              src="assets/img/galeria/centro-de-estudiante-2.webp"
+              alt="Inicio de actividades académicas"
+            />
+            <div class="news-content">
+              <span class="news-cat">Comunidad</span>
+              <h3>Elecciones del centro de estudiantes y participación escolar</h3>
+              <p>
+                Una jornada que fortaleció la formación ciudadana, el respeto y la participación
+                democrática dentro de la comunidad educativa.
+              </p>
+            </div>
+          </a>
+
+          <a
+            class="news-card"
+            href="noticia-simce.html"
+            aria-label="Leer noticia: Resultados SIMCE"
+          >
+            <img src="assets/img/galeria/simce-1.webp" alt="Sala de computación" />
+            <div class="news-content">
+              <span class="news-cat">Académico</span>
+              <h3>Fortalecimiento pedagógico y positivos resultados SIMCE</h3>
+              <p>
+                El compromiso de estudiantes, docentes y familias se refleja en avances que
+                fortalecen el aprendizaje y la proyección institucional.
+              </p>
+            </div>
+          </a>
+
+          <a
+            class="news-card"
+            href="noticia-estadio.html"
+            aria-label="Leer noticia: Visita al estadio Luis Hermosilla"
+          >
+            <img src="assets/img/galeria/estudiantes-visitan-estadio-2.webp" alt="Actividades formativas" />
+            <div class="news-content">
+              <span class="news-cat">Vida escolar</span>
+              <h3>Salida pedagógica y aprendizaje significativo fuera del aula</h3>
+              <p>
+                Experiencias educativas en terreno que fortalecen la convivencia, la observación y
+                el vínculo de los estudiantes con su entorno.
+              </p>
             </div>
           </a>
         </div>
+      </section>
 
-        <button class="slider-arrow prev" type="button" aria-label="Slide anterior">❮</button>
-        <button class="slider-arrow next" type="button" aria-label="Slide siguiente">❯</button>
-
-        <div class="slider-dots" aria-label="Controles del carrusel"></div>
-      </article>
-
-      <aside class="general-grid" aria-label="Sección general">
-        <a
-          class="general-card"
-          href="noticia-elecciones.html"
-          aria-label="Leer noticia: Elecciones del centro de estudiantes"
-        >
-          <img
-            src="assets/img/galeria/centro-de-estudiante-2.webp"
-            alt="Centro de estudiantes"
-          />
-          <div class="general-overlay">
-            <h3>Elecciones del centro de estudiantes</h3>
-            <p>marzo 18, 2026</p>
-          </div>
+      <section class="quick-links" aria-label="Accesos rápidos">
+        <a href="escuela.html" class="quick-card">
+          <h3>Mi Escuela</h3>
+          <p>Proyecto educativo, reglamentos y sellos institucionales.</p>
         </a>
 
         <a
-          class="general-card"
-          href="noticia-simce.html"
-          aria-label="Leer noticia: Resultados SIMCE"
+          href="https://bibliotecadigital.mineduc.cl/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="quick-card"
         >
-          <img src="assets/img/galeria/simce-2.webp" alt="Resultados SIMCE" />
-          <div class="general-overlay">
-            <h3>Las Canteras celebra resultados SIMCE</h3>
-            <p>marzo 16, 2026</p>
-          </div>
+          <h3>Biblioteca CRA</h3>
+          <p>Recursos, actividades lectoras y promoción de la lectura.</p>
         </a>
 
         <a
-          class="general-card"
-          href="noticia-dia-mujer.html"
-          aria-label="Leer noticia: Día de la Mujer"
+          href="https://sites.google.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="quick-card"
         >
-          <img
-            src="assets/img/galeria/dia-de-la-mujer-1.webp"
-            alt="Día de la mujer en Las Canteras"
-          />
-          <div class="general-overlay">
-            <h3>Celebramos el Día de la Mujer en Las Canteras</h3>
-            <p>marzo 9, 2026</p>
-          </div>
+          <h3>Tecnología</h3>
+          <p>Intranet sala de computación, disponibilidad y reserva sala.</p>
         </a>
+      </section>
+    </div>
 
-        <a
-          class="general-card"
-          href="noticia-estadio.html"
-          aria-label="Leer noticia: Visita al estadio Luis Hermosilla"
-        >
-          <img
-            src="assets/img/galeria/estudiantes-visitan-estadio-2.webp"
-            alt="Salida pedagógica"
-          />
-          <div class="general-overlay">
-            <h3>Alumnos del primer ciclo visitaron el estadio Luis Hermosilla</h3>
-            <p>marzo 20, 2026</p>
-          </div>
-        </a>
-      </aside>
-    </section>
+    <!-- SIDEBAR DERECHA -->
+    <aside class="sidebar-derecha">
+      <section class="widget-box">
+        <strong><h3>Tiempo en Copiapó</h3></strong>
+        <div class="widget-contenido clima-widget">
+          <a
+            class="weatherwidget-io"
+            href="https://forecast7.com/es/n27d37n70d33/copiapo/"
+            data-label_1="COPIAPÓ"
+            data-label_2="TIEMPO"
+            data-theme="pure"
+          >
+            COPIAPÓ TIEMPO
+          </a>
+        </div>
+      </section>
 
-    <section class="news-section" aria-labelledby="noticias-recientes">
-      <div class="section-title">
-        <span></span>
-        <h2 id="noticias-recientes">Noticias recientes</h2>
-      </div>
+      <section class="widget-box">
+        <strong><h3>¡Ya puedes revalidar tu TNE!</h3></strong>
+        <div class="widget-contenido">
+          <img src="assets/img/publicidad/publicidad-1.webp" alt="Espacio publicitario" class="widget-img" />
+          <p>Tienes plazo hasta el 31 de mayo para realizar la revalidación electrónica en los tótems y/o pegar el sello 2026.</p>
+          <a href="https://www.junaeb.cl/" class="widget-btn">Más información</a>
+        </div>
+      </section>
 
-      <div class="news-grid">
-        <a
-          class="news-card"
-          href="noticia-elecciones.html"
-          aria-label="Leer noticia: Elecciones del centro de estudiantes"
-        >
-          <img
-            src="assets/img/galeria/centro-de-estudiante-2.webp"
-            alt="Inicio de actividades académicas"
-          />
-          <div class="news-content">
-            <span class="news-cat">Comunidad</span>
-            <h3>Elecciones del centro de estudiantes y participación escolar</h3>
-            <p>
-              Una jornada que fortaleció la formación ciudadana, el respeto y la participación
-              democrática dentro de la comunidad educativa.
-            </p>
-          </div>
-        </a>
-
-        <a
-          class="news-card"
-          href="noticia-simce.html"
-          aria-label="Leer noticia: Resultados SIMCE"
-        >
-          <img src="assets/img/galeria/simce-1.webp" alt="Sala de computación" />
-          <div class="news-content">
-            <span class="news-cat">Académico</span>
-            <h3>Fortalecimiento pedagógico y positivos resultados SIMCE</h3>
-            <p>
-              El compromiso de estudiantes, docentes y familias se refleja en avances que
-              fortalecen el aprendizaje y la proyección institucional.
-            </p>
-          </div>
-        </a>
-
-        <a
-          class="news-card"
-          href="noticia-estadio.html"
-          aria-label="Leer noticia: Visita al estadio Luis Hermosilla"
-        >
-          <img src="assets/img/galeria/estudiantes-visitan-estadio-2.webp" alt="Actividades formativas" />
-          <div class="news-content">
-            <span class="news-cat">Vida escolar</span>
-            <h3>Salida pedagógica y aprendizaje significativo fuera del aula</h3>
-            <p>
-              Experiencias educativas en terreno que fortalecen la convivencia, la observación y
-              el vínculo de los estudiantes con su entorno.
-            </p>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <section class="quick-links" aria-label="Accesos rápidos">
-      <a href="escuela.html" class="quick-card">
-        <h3>Mi Escuela</h3>
-        <p>Proyecto educativo, reglamentos y sellos institucionales.</p>
-      </a>
-
-      <a
-        href="https://bibliotecadigital.mineduc.cl/"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="quick-card"
-      >
-        <h3>Biblioteca CRA</h3>
-        <p>Recursos, actividades lectoras y promoción de la lectura.</p>
-      </a>
-
-      <a
-        href="https://sites.google.com/"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="quick-card"
-      >
-        <h3>Tecnología</h3>
-        <p>Intranet sala de computación, disponibilidad y reserva sala .</p>
-      </a>
-    </section>
+      <section class="widget-box">
+        <strong><h3>Accede a una Beca 100%</h3></strong>
+        <div class="widget-contenido">
+          <img src="assets/img/publicidad/cultural-1.webp" alt="Oferta cultural" class="widget-img" />
+          <p>¿ERES PROFESOR/A Y TE INTERESA LA ROBÓTICA? INTEGRA LA ROBÓTICA EN TU AULA
+              Accede a una Beca 100% del programa formativo de Robótica Educativa de 7 semanas..</p>
+          <a href="https://steam.volemosalto.cl/registrobeca-programaformativorobotica/" class="widget-btn">Ver cartelera</a>
+        </div>
+      </section>
+    </aside>
   </main>
 
   <footer class="site-footer">
@@ -441,5 +492,38 @@
   </footer>
 
   <script src="main.js"></script>
+
+  <script>
+    !function(d,s,id){
+      var js,fjs=d.getElementsByTagName(s)[0];
+      if(!d.getElementById(id)){
+        js=d.createElement(s);
+        js.id=id;
+        js.src='https://weatherwidget.io/js/widget.min.js';
+        fjs.parentNode.insertBefore(js,fjs);
+      }
+    }(document,'script','weatherwidget-io-js');
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const popup = document.getElementById("popup-auto");
+      const cerrarBtn = document.getElementById("popup-cerrar-btn");
+      const tiempoVisible = 4000; // 4 segundos
+
+      popup.classList.add("activo");
+      popup.setAttribute("aria-hidden", "false");
+
+      setTimeout(() => {
+        popup.classList.remove("activo");
+        popup.setAttribute("aria-hidden", "true");
+      }, tiempoVisible);
+
+      cerrarBtn.addEventListener("click", () => {
+        popup.classList.remove("activo");
+        popup.setAttribute("aria-hidden", "true");
+      });
+    });
+  </script>
 </body>
 </html>
