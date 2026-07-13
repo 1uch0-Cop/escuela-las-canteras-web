@@ -896,6 +896,9 @@ button {
 }
 
 .contact-btn {
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
   margin-top: 8px;
   border: 0;
   background: var(--primary);
@@ -908,6 +911,11 @@ button {
 
 .contact-btn:hover {
   background: var(--primary-dark);
+}
+
+.contact-btn:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
 }
 
 /* =========================

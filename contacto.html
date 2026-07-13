@@ -14,12 +14,12 @@
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
 
-  <link rel="icon" href="assets/icono/insignia.ico" />
+  <link rel="icon" href="assets/logos/logo-escuela.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&amp;display=swap"
     rel="stylesheet"
   />
 
@@ -69,15 +69,39 @@
 
           <div class="dropdown-menu">
             <a href="escuela.html">Nuestra escuela</a>
-            <a href="assets/pdf/proyecto-educativo.pdf" target="_blank" rel="noopener noreferrer">
-              Proyecto Educativo
+
+            <a
+              href="assets/pdf/proyecto-educativo.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Proyecto Educativo (PDF)
             </a>
+
+            <a
+              href="assets/pdf/reglamento_de_evaluacion_2026.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Reglamento de Evaluación (PDF)
+            </a>
+
             <a href="sello.html">Sello institucional</a>
-            <a href="assets/pdf/reglamento-interno.pdf" target="_blank" rel="noopener noreferrer">
-              Reglamento interno
+
+            <a
+              href="assets/pdf/reglamento_interno_2025-2026.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Reglamento Interno (PDF)
             </a>
-            <a href="assets/pdf/reglamento-convivencia.pdf" target="_blank" rel="noopener noreferrer">
-              Reglamento convivencia
+
+            <a
+              href="assets/pdf/plan_de_gestion_convivencia_escolar_2025.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Plan de Gestión de Convivencia Escolar (PDF)
             </a>
           </div>
         </li>
@@ -96,7 +120,7 @@
         <li class="nav-item">
           <a
             class="nav-link"
-            href="https://sites.google.com/"
+            href="https://sites.google.com/slepatacama.cl/sala-de-computacin/p%C3%A1gina-principal"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -104,7 +128,6 @@
           </a>
         </li>
 
-        
         <li class="nav-item">
           <a class="nav-link" href="contacto.html">Contacto</a>
         </li>
@@ -136,13 +159,13 @@
         <div class="contact-list">
           <p><strong>Establecimiento:</strong> Escuela Las Canteras</p>
           <p><strong>Dirección:</strong> Secundino Pérez sin número, Población Las Canteras, comuna de Copiapó, Región de Atacama, Chile</p>
-          <p><strong>Correo:</strong> secretariaescuelalascanteras@gmail.com</p>
-          <p><strong>Teléfono:</strong> 522213454</p>
+          <p><strong>Correo:</strong> <a href="mailto:secretariaescuelalascanteras@gmail.com">secretariaescuelalascanteras@gmail.com</a></p>
+          <p><strong>Teléfono:</strong> <a href="tel:+56522213454">(52) 221 3454</a></p>
         </div>
 
         <div class="map-box">
           <iframe
-            src="https://www.google.com/maps?q=Escuela+Las+Canteras+Copiap%C3%B3&output=embed"
+            src="https://www.google.com/maps?q=Escuela+Las+Canteras+Copiap%C3%B3&amp;output=embed"
             width="100%"
             height="360"
             style="border:0"
@@ -154,62 +177,26 @@
       </article>
 
       <article class="page-card">
-        <h2 class="contact-title">Formulario de contacto</h2>
+        <h2 class="contact-title">Canal de contacto</h2>
 
-        <form
-          class="contact-form"
-          name="contacto"
-          method="POST"
-          data-netlify="true"
-          netlify-honeypot="bot-field"
-          action="gracias.html"
-        >
-          <input type="hidden" name="form-name" value="contacto" />
-          <p class="hidden-field">
-            <label>
-              No completar este campo:
-              <input name="bot-field" />
-            </label>
-          </p>
+        <p>
+          Para consultas generales, comuníquese mediante el correo
+          institucional de la escuela.
+        </p>
 
-          <label for="nombre">Nombre</label>
-          <input
-            type="text"
-            id="nombre"
-            name="nombre"
-            placeholder="Ingrese su nombre"
-            required
-          />
+        <p>
+          <a
+            class="contact-btn"
+            href="mailto:secretariaescuelalascanteras@gmail.com"
+          >
+            Escribir al correo institucional
+          </a>
+        </p>
 
-          <label for="correo">Correo electrónico</label>
-          <input
-            type="email"
-            id="correo"
-            name="correo"
-            placeholder="Ingrese su correo"
-            required
-          />
-
-          <label for="asunto">Asunto</label>
-          <input
-            type="text"
-            id="asunto"
-            name="asunto"
-            placeholder="Asunto del mensaje"
-            required
-          />
-
-          <label for="mensaje">Mensaje</label>
-          <textarea
-            id="mensaje"
-            name="mensaje"
-            rows="6"
-            placeholder="Escriba su mensaje"
-            required
-          ></textarea>
-
-          <button type="submit" class="contact-btn">Enviar mensaje</button>
-        </form>
+        <p>
+          Por seguridad, no envíe contraseñas ni antecedentes personales
+          sensibles mediante correo electrónico.
+        </p>
       </article>
     </section>
   </main>
@@ -223,8 +210,8 @@
 
       <div>
         <h3>Contacto</h3>
-        <p>contacto@escuelalascanterascopiapo.cl</p>
-        <p>Teléfono: 522213454</p>
+        <p><a href="mailto:secretariaescuelalascanteras@gmail.com">secretariaescuelalascanteras@gmail.com</a></p>
+        <p>Teléfono: <a href="tel:+56522213454">(52) 221 3454</a></p>
       </div>
     </div>
 
