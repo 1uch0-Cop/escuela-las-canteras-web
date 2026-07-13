@@ -1,0 +1,46 @@
+name: Validate site
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Install HTML Tidy
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes tidy
+
+      - name: Validate JavaScript
+        run: node --check main.js
+
+      - name: Validate repository structure and links
+        run: python3 scripts/validate_site.py
+
+      - name: Validate HTML
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          for file in *.html; do
+            echo "Validating $file"
+
+            set +e
+            tidy -quiet -errors -utf8 "$file"
+            code=$?
+            set -e
+
+            if [ "$code" -ge 2 ]; then
+              echo "HTML validation failed for $file"
+              exit 1
+            fi
+          done
