@@ -45,6 +45,7 @@ jobs:
                   self.inline_scripts = 0
                   self.external_scripts = []
                   self.external_styles = []
+                  self.csp = None
 
               def handle_starttag(self, tag, attrs):
                   attrs = dict(attrs)
@@ -65,7 +66,10 @@ jobs:
                       if href and (urlparse(href).scheme or href.startswith('//')):
                           self.external_styles.append(href)
 
-          ignored_link_pages = {'noticia-plantilla.html'}
+                  if tag == 'meta' and (attrs.get('http-equiv') or '').lower() == 'content-security-policy':
+                      self.csp = attrs.get('content')
+
+          ignored_pages = {'noticia-plantilla.html'}
           primary_pages = {'index.html', 'contacto.html', 'escuela.html', 'sello.html', '404.html'}
           required_csp_parts = [
               "default-src 'self'",
@@ -80,6 +84,9 @@ jobs:
               lower = text.lower()
               parser = PageParser()
               parser.feed(text)
+
+              if html.name in ignored_pages:
+                  continue
 
               if 'fonts.googleapis.com' in lower or 'fonts.gstatic.com' in lower:
                   errors.append(f'Dependencia de Google Fonts no permitida en {html}')
@@ -97,21 +104,12 @@ jobs:
               if html.name in primary_pages:
                   if 'assets/logos/logo-escuela.png' not in text:
                       errors.append(f'Favicon institucional faltante en {html}')
-                  csp_match = re.search(
-                      r'<meta\s+[^>]*http-equiv=["\']Content-Security-Policy["\'][^>]*content=["\']([^"\']+)["\']',
-                      text,
-                      flags=re.IGNORECASE,
-                  )
-                  if not csp_match:
+                  if not parser.csp:
                       errors.append(f'CSP faltante en {html}')
                   else:
-                      csp = csp_match.group(1)
                       for part in required_csp_parts:
-                          if part not in csp:
+                          if part not in parser.csp:
                               errors.append(f'CSP incompleta en {html}: falta {part}')
-
-              if html.name in ignored_link_pages:
-                  continue
 
               for ref in parser.refs:
                   parsed = urlparse(ref)
