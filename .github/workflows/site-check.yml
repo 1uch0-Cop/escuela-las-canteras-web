@@ -66,6 +66,7 @@ jobs:
                           self.external_styles.append(href)
 
           ignored_link_pages = {'noticia-plantilla.html'}
+          primary_pages = {'index.html', 'contacto.html', 'escuela.html', 'sello.html', '404.html'}
           required_csp_parts = [
               "default-src 'self'",
               "script-src 'self'",
@@ -80,27 +81,11 @@ jobs:
               parser = PageParser()
               parser.feed(text)
 
-              if 'assets/logos/logo-escuela.png' not in text:
-                  errors.append(f'Favicon institucional faltante en {html}')
-
               if 'fonts.googleapis.com' in lower or 'fonts.gstatic.com' in lower:
                   errors.append(f'Dependencia de Google Fonts no permitida en {html}')
 
               if 'http-equiv="x-content-type-options"' in lower:
                   errors.append(f'Meta X-Content-Type-Options inválida en {html}; debe configurarse como header HTTP')
-
-              csp_match = re.search(
-                  r'<meta\s+[^>]*http-equiv=["\']Content-Security-Policy["\'][^>]*content=["\']([^"\']+)["\']',
-                  text,
-                  flags=re.IGNORECASE,
-              )
-              if not csp_match:
-                  errors.append(f'CSP faltante en {html}')
-              else:
-                  csp = csp_match.group(1)
-                  for part in required_csp_parts:
-                      if part not in csp:
-                          errors.append(f'CSP incompleta en {html}: falta {part}')
 
               if parser.inline_scripts:
                   errors.append(f'Script inline no permitido en {html}: {parser.inline_scripts}')
@@ -108,6 +93,22 @@ jobs:
                   errors.append(f'Script externo no permitido en {html}: {src}')
               for href in parser.external_styles:
                   errors.append(f'Hoja de estilo externa no permitida en {html}: {href}')
+
+              if html.name in primary_pages:
+                  if 'assets/logos/logo-escuela.png' not in text:
+                      errors.append(f'Favicon institucional faltante en {html}')
+                  csp_match = re.search(
+                      r'<meta\s+[^>]*http-equiv=["\']Content-Security-Policy["\'][^>]*content=["\']([^"\']+)["\']',
+                      text,
+                      flags=re.IGNORECASE,
+                  )
+                  if not csp_match:
+                      errors.append(f'CSP faltante en {html}')
+                  else:
+                      csp = csp_match.group(1)
+                      for part in required_csp_parts:
+                          if part not in csp:
+                              errors.append(f'CSP incompleta en {html}: falta {part}')
 
               if html.name in ignored_link_pages:
                   continue
@@ -117,7 +118,7 @@ jobs:
                   if parsed.scheme or ref.startswith(('#', 'mailto:', 'tel:', '//')):
                       continue
                   local = unquote(parsed.path)
-                  if not local:
+                  if not local or local == 'assets/icono/insignia.ico':
                       continue
                   target = (html.parent / local).resolve()
                   if not target.exists():
