@@ -18,7 +18,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Validate local links and sensitive files
+      - name: Validate site security and local links
         shell: python
         run: |
           from pathlib import Path
@@ -38,10 +38,14 @@ jobs:
               if path.name in forbidden_names or path.suffix.lower() in forbidden_suffixes:
                   errors.append(f'Archivo sensible no permitido: {path}')
 
-          class Links(HTMLParser):
+          class PageParser(HTMLParser):
               def __init__(self):
                   super().__init__()
                   self.refs = []
+                  self.inline_scripts = 0
+                  self.external_scripts = []
+                  self.external_styles = []
+
               def handle_starttag(self, tag, attrs):
                   attrs = dict(attrs)
                   for key in ('href', 'src'):
@@ -49,20 +53,71 @@ jobs:
                       if value:
                           self.refs.append(value)
 
-          ignored_pages = {'noticia-plantilla.html'}
-          ignored_missing_refs = {'assets/icono/insignia.ico'}
+                  if tag == 'script':
+                      src = attrs.get('src')
+                      if not src:
+                          self.inline_scripts += 1
+                      elif urlparse(src).scheme or src.startswith('//'):
+                          self.external_scripts.append(src)
+
+                  if tag == 'link' and 'stylesheet' in (attrs.get('rel') or '').lower():
+                      href = attrs.get('href')
+                      if href and (urlparse(href).scheme or href.startswith('//')):
+                          self.external_styles.append(href)
+
+          ignored_link_pages = {'noticia-plantilla.html'}
+          required_csp_parts = [
+              "default-src 'self'",
+              "script-src 'self'",
+              "object-src 'none'",
+              "base-uri 'none'",
+              "frame-src 'none'",
+          ]
 
           for html in root.rglob('*.html'):
-              if html.name in ignored_pages:
+              text = html.read_text(encoding='utf-8', errors='ignore')
+              lower = text.lower()
+              parser = PageParser()
+              parser.feed(text)
+
+              if 'assets/logos/logo-escuela.png' not in text:
+                  errors.append(f'Favicon institucional faltante en {html}')
+
+              if 'fonts.googleapis.com' in lower or 'fonts.gstatic.com' in lower:
+                  errors.append(f'Dependencia de Google Fonts no permitida en {html}')
+
+              if 'http-equiv="x-content-type-options"' in lower:
+                  errors.append(f'Meta X-Content-Type-Options inválida en {html}; debe configurarse como header HTTP')
+
+              csp_match = re.search(
+                  r'<meta\s+[^>]*http-equiv=["\']Content-Security-Policy["\'][^>]*content=["\']([^"\']+)["\']',
+                  text,
+                  flags=re.IGNORECASE,
+              )
+              if not csp_match:
+                  errors.append(f'CSP faltante en {html}')
+              else:
+                  csp = csp_match.group(1)
+                  for part in required_csp_parts:
+                      if part not in csp:
+                          errors.append(f'CSP incompleta en {html}: falta {part}')
+
+              if parser.inline_scripts:
+                  errors.append(f'Script inline no permitido en {html}: {parser.inline_scripts}')
+              for src in parser.external_scripts:
+                  errors.append(f'Script externo no permitido en {html}: {src}')
+              for href in parser.external_styles:
+                  errors.append(f'Hoja de estilo externa no permitida en {html}: {href}')
+
+              if html.name in ignored_link_pages:
                   continue
-              parser = Links()
-              parser.feed(html.read_text(encoding='utf-8', errors='ignore'))
+
               for ref in parser.refs:
                   parsed = urlparse(ref)
                   if parsed.scheme or ref.startswith(('#', 'mailto:', 'tel:', '//')):
                       continue
                   local = unquote(parsed.path)
-                  if not local or local in ignored_missing_refs:
+                  if not local:
                       continue
                   target = (html.parent / local).resolve()
                   if not target.exists():
@@ -86,4 +141,5 @@ jobs:
           if errors:
               print('\n'.join(f'ERROR: {e}' for e in errors))
               sys.exit(1)
-          print('OK: enlaces locales y controles básicos de secretos superados.')
+
+          print('OK: controles de seguridad, dependencias y enlaces locales superados.')
