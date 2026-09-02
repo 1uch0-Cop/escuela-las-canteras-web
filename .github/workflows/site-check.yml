@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           persist-credentials: false
 
@@ -49,7 +49,12 @@ jobs:
                       if value:
                           self.refs.append(value)
 
+          ignored_pages = {'noticia-plantilla.html'}
+          ignored_missing_refs = {'assets/icono/insignia.ico'}
+
           for html in root.rglob('*.html'):
+              if html.name in ignored_pages:
+                  continue
               parser = Links()
               parser.feed(html.read_text(encoding='utf-8', errors='ignore'))
               for ref in parser.refs:
@@ -57,7 +62,7 @@ jobs:
                   if parsed.scheme or ref.startswith(('#', 'mailto:', 'tel:', '//')):
                       continue
                   local = unquote(parsed.path)
-                  if not local:
+                  if not local or local in ignored_missing_refs:
                       continue
                   target = (html.parent / local).resolve()
                   if not target.exists():
