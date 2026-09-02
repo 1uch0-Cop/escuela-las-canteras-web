@@ -1,0 +1,89 @@
+name: Site security checks
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - name: Validate local links and sensitive files
+        shell: python
+        run: |
+          from pathlib import Path
+          from html.parser import HTMLParser
+          from urllib.parse import urlparse, unquote
+          import re, sys
+
+          root = Path('.')
+          errors = []
+
+          forbidden_names = {'.env', '.env.local', '.env.production'}
+          forbidden_suffixes = {'.pem', '.key', '.p12', '.pfx', '.sqlite', '.db'}
+
+          for path in root.rglob('*'):
+              if not path.is_file() or '.git' in path.parts:
+                  continue
+              if path.name in forbidden_names or path.suffix.lower() in forbidden_suffixes:
+                  errors.append(f'Archivo sensible no permitido: {path}')
+
+          class Links(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.refs = []
+              def handle_starttag(self, tag, attrs):
+                  attrs = dict(attrs)
+                  for key in ('href', 'src'):
+                      value = attrs.get(key)
+                      if value:
+                          self.refs.append(value)
+
+          ignored_pages = {'noticia-plantilla.html'}
+          ignored_missing_refs = {'assets/icono/insignia.ico'}
+
+          for html in root.rglob('*.html'):
+              if html.name in ignored_pages:
+                  continue
+              parser = Links()
+              parser.feed(html.read_text(encoding='utf-8', errors='ignore'))
+              for ref in parser.refs:
+                  parsed = urlparse(ref)
+                  if parsed.scheme or ref.startswith(('#', 'mailto:', 'tel:', '//')):
+                      continue
+                  local = unquote(parsed.path)
+                  if not local or local in ignored_missing_refs:
+                      continue
+                  target = (html.parent / local).resolve()
+                  if not target.exists():
+                      errors.append(f'Enlace local roto en {html}: {ref}')
+
+          token_patterns = [
+              re.compile(r'ghp_[A-Za-z0-9]{20,}'),
+              re.compile(r'github_pat_[A-Za-z0-9_]{20,}'),
+              re.compile(r'sk-[A-Za-z0-9_-]{20,}'),
+              re.compile(r'-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----'),
+          ]
+          text_suffixes = {'.html', '.js', '.css', '.md', '.txt', '.yml', '.yaml', '.json'}
+          for path in root.rglob('*'):
+              if not path.is_file() or path.suffix.lower() not in text_suffixes or '.git' in path.parts:
+                  continue
+              text = path.read_text(encoding='utf-8', errors='ignore')
+              for pattern in token_patterns:
+                  if pattern.search(text):
+                      errors.append(f'Posible secreto detectado en {path}: {pattern.pattern}')
+
+          if errors:
+              print('\n'.join(f'ERROR: {e}' for e in errors))
+              sys.exit(1)
+          print('OK: enlaces locales y controles básicos de secretos superados.')
