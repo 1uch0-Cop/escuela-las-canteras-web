@@ -1,4 +1,44 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const INTRANET_URL = "https://sites.google.com/slepatacama.cl/sala-de-computacin/p%C3%A1gina-principal";
+  const CRA_URL = "https://bibliotecadigital.mineduc.cl/";
+
+  /* =========================
+     NORMALIZACIÓN GLOBAL
+  ========================= */
+  const favicon = document.querySelector('link[rel="icon"]');
+  if (favicon) {
+    favicon.href = "assets/logos/logo-escuela.png";
+    favicon.type = "image/png";
+  }
+
+  document.querySelectorAll("a[href]").forEach((link) => {
+    const href = link.getAttribute("href");
+
+    if (href === "https://sites.google.com/" || href === "intranet.html") {
+      link.href = INTRANET_URL;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+    }
+
+    if (href === "biblioteca-cra.html") {
+      link.href = CRA_URL;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+    }
+
+    if (href === "assets/pdf/reglamento-interno.pdf") {
+      link.href = "assets/pdf/reglamento_interno_2025-2026.pdf";
+    }
+
+    if (href === "assets/pdf/reglamento-convivencia.pdf") {
+      link.href = "assets/pdf/plan_de_gestion_convivencia_escolar_2025.pdf";
+    }
+
+    if (href === "noticia-centro-estudiantes.html") {
+      link.href = "noticia-elecciones.html";
+    }
+  });
+
   /* =========================
      MENÚ DESPLEGABLE
   ========================= */
@@ -6,24 +46,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   dropdowns.forEach((dropdown) => {
     const toggle = dropdown.querySelector(".dropdown-toggle");
-
     if (!toggle) return;
 
-    toggle.addEventListener("click", (e) => {
-      e.stopPropagation();
+    toggle.addEventListener("click", (event) => {
+      event.stopPropagation();
 
       dropdowns.forEach((item) => {
         if (item !== dropdown) {
           item.classList.remove("open");
           const otherToggle = item.querySelector(".dropdown-toggle");
-          if (otherToggle) {
-            otherToggle.setAttribute("aria-expanded", "false");
-          }
+          if (otherToggle) otherToggle.setAttribute("aria-expanded", "false");
         }
       });
 
       const isOpen = dropdown.classList.toggle("open");
-      toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      toggle.setAttribute("aria-expanded", String(isOpen));
     });
   });
 
@@ -31,9 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
     dropdowns.forEach((dropdown) => {
       dropdown.classList.remove("open");
       const toggle = dropdown.querySelector(".dropdown-toggle");
-      if (toggle) {
-        toggle.setAttribute("aria-expanded", "false");
-      }
+      if (toggle) toggle.setAttribute("aria-expanded", "false");
     });
   });
 
@@ -44,15 +79,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const navList = document.querySelector(".nav-list");
 
   if (navToggle && navList) {
-    navToggle.addEventListener("click", (e) => {
-      e.stopPropagation();
+    navToggle.addEventListener("click", (event) => {
+      event.stopPropagation();
       const isOpen = navList.classList.toggle("open");
-      navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      navToggle.setAttribute("aria-expanded", String(isOpen));
       navToggle.setAttribute("aria-label", isOpen ? "Cerrar menú" : "Abrir menú");
     });
 
-    document.addEventListener("click", (e) => {
-      if (!navList.contains(e.target) && !navToggle.contains(e.target)) {
+    document.addEventListener("click", (event) => {
+      if (!navList.contains(event.target) && !navToggle.contains(event.target)) {
         navList.classList.remove("open");
         navToggle.setAttribute("aria-expanded", "false");
         navToggle.setAttribute("aria-label", "Abrir menú");
@@ -69,15 +104,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const lightboxClose = document.getElementById("lightboxClose");
 
   if (galleryItems.length && lightbox && lightboxImage && lightboxClose) {
-    galleryItems.forEach((img) => {
-      img.addEventListener("click", () => {
-        lightboxImage.src = img.src;
-        lightboxImage.alt = img.alt;
-        lightbox.classList.add("active");
-        document.body.style.overflow = "hidden";
-      });
-    });
-
     const closeLightbox = () => {
       lightbox.classList.remove("active");
       lightboxImage.src = "";
@@ -85,16 +111,24 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.style.overflow = "";
     };
 
-    lightboxClose.addEventListener("click", closeLightbox);
-
-    lightbox.addEventListener("click", (e) => {
-      if (e.target === lightbox) {
-        closeLightbox();
-      }
+    galleryItems.forEach((img) => {
+      img.addEventListener("click", () => {
+        lightboxImage.src = img.src;
+        lightboxImage.alt = img.alt;
+        lightbox.classList.add("active");
+        document.body.style.overflow = "hidden";
+        lightboxClose.focus();
+      });
     });
 
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && lightbox.classList.contains("active")) {
+    lightboxClose.addEventListener("click", closeLightbox);
+
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && lightbox.classList.contains("active")) {
         closeLightbox();
       }
     });
@@ -108,25 +142,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const prevBtn = document.querySelector(".slider-arrow.prev");
   const nextBtn = document.querySelector(".slider-arrow.next");
   const slider = document.querySelector(".slider");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   let current = 0;
   let intervalId = null;
 
   if (slides.length > 0 && dotsContainer) {
+    dotsContainer.innerHTML = "";
+
     slides.forEach((slide, index) => {
-      if (index === 0) {
-        slide.classList.add("active");
-      } else {
-        slide.classList.remove("active");
-      }
+      slide.classList.toggle("active", index === 0);
+      slide.setAttribute("aria-hidden", index === 0 ? "false" : "true");
 
       const dot = document.createElement("button");
       dot.type = "button";
       dot.setAttribute("aria-label", `Ir a la imagen ${index + 1}`);
-
-      if (index === 0) {
-        dot.classList.add("active");
-      }
+      dot.classList.toggle("active", index === 0);
 
       dot.addEventListener("click", () => {
         showSlide(index);
@@ -140,30 +171,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function showSlide(index) {
       slides[current].classList.remove("active");
+      slides[current].setAttribute("aria-hidden", "true");
       dots[current].classList.remove("active");
 
       current = index;
 
       slides[current].classList.add("active");
+      slides[current].setAttribute("aria-hidden", "false");
       dots[current].classList.add("active");
     }
 
     function nextSlide() {
-      const next = (current + 1) % slides.length;
-      showSlide(next);
+      showSlide((current + 1) % slides.length);
     }
 
     function prevSlide() {
-      const prev = (current - 1 + slides.length) % slides.length;
-      showSlide(prev);
+      showSlide((current - 1 + slides.length) % slides.length);
     }
 
     function restartInterval() {
       clearInterval(intervalId);
-      intervalId = setInterval(nextSlide, 5000);
+      if (!reduceMotion) intervalId = setInterval(nextSlide, 5000);
     }
 
-    intervalId = setInterval(nextSlide, 5000);
+    restartInterval();
 
     if (prevBtn) {
       prevBtn.addEventListener("click", () => {
@@ -179,14 +210,11 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    if (slider) {
-      slider.addEventListener("mouseenter", () => {
-        clearInterval(intervalId);
-      });
-
-      slider.addEventListener("mouseleave", () => {
-        restartInterval();
-      });
+    if (slider && !reduceMotion) {
+      slider.addEventListener("mouseenter", () => clearInterval(intervalId));
+      slider.addEventListener("mouseleave", restartInterval);
+      slider.addEventListener("focusin", () => clearInterval(intervalId));
+      slider.addEventListener("focusout", restartInterval);
     }
   }
 
@@ -196,14 +224,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const fechaActual = document.getElementById("fecha-actual");
 
   if (fechaActual) {
-    const hoy = new Date();
-    const texto = hoy.toLocaleDateString("es-CL", {
+    fechaActual.textContent = new Date().toLocaleDateString("es-CL", {
       weekday: "long",
       year: "numeric",
       month: "long",
       day: "numeric"
     });
-
-    fechaActual.textContent = texto;
   }
 });
