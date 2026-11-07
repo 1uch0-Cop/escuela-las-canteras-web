@@ -1,0 +1,1 @@
+const dlg=document.querySelector('#visor');const enlarged=dlg.querySelector('img');document.querySelectorAll('.image-button').forEach(b=>b.addEventListener('click',()=>{enlarged.src=b.dataset.src;enlarged.alt=b.dataset.alt;dlg.showModal()}));dlg.querySelector('.close').addEventListener('click',()=>dlg.close());dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
